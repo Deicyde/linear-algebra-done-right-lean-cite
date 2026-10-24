@@ -8,6 +8,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Recall
 import CompanionHelper
+import LinearAlgebraDoneRightLean.Sources
 
 /-!
 # Axler, *Linear Algebra Done Right* (4e) — Section 1B: Definition of Vector Space
@@ -17,6 +18,7 @@ namespace LADR.Section_1B
 
 /-! 1.19–1.20 Definition: addition, scalar multiplication; vector space -/
 
+@[cite ladr4e "1.19", cite ladr4e "1.20", cite ladr4e "1.22" (rel := broadMatch)]
 structure LADRVectorSpace (F : Type*) [Field F] (V : Type*) where
   /-- Definition 1.19: addition -/
   add : V → V → V
@@ -54,15 +56,23 @@ variable {F : Type*} [Field F] {V : Type*} [AddCommGroup V] [Module F V]
 
 /-! The eight axioms above are derivable from the typeclass methods and
 we get to use a nicer notation. -/
+cite ladr4e "1.20" (rel := hasPart) in
 recall add_comm {G : Type*} [AddCommMagma G] (a b : G) : a + b = b + a
+cite ladr4e "1.20" (rel := hasPart) in
 recall add_assoc {G : Type*} [AddSemigroup G] (a b c : G) : a + b + c = a + (b + c)
+cite ladr4e "1.20" (rel := hasPart) in
 recall add_zero {M : Type*} [AddZeroClass M] (a : M) : a + 0 = a
+cite ladr4e "1.20" (rel := hasPart) in
 recall add_neg_cancel {G : Type*} [AddGroup G] (a : G) : a + -a = 0
+cite ladr4e "1.20" (rel := hasPart) in
 recall one_smul (M : Type*) {α : Type*} [Monoid M] [MulAction M α] (b : α) : (1 : M) • b = b
+cite ladr4e "1.20" (rel := hasPart) in
 recall smul_add {M : Type*} {A : Type*} [AddZeroClass A] [DistribSMul M A]
     (a : M) (b₁ b₂ : A) : a • (b₁ + b₂) = a • b₁ + a • b₂
+cite ladr4e "1.20" (rel := hasPart) in
 recall add_smul {R : Type*} {M : Type*} [Semiring R] [AddCommMonoid M] [Module R M]
     (r s : R) (x : M) : (r + s) • x = r • x + s • x
+cite ladr4e "1.20" (rel := hasPart) in
 recall mul_smul {α : Type*} {β : Type*} [Semigroup α] [SemigroupAction α β]
     (x y : α) (b : β) : (x * y) • b = x • y • b
 
@@ -81,16 +91,22 @@ real vector space; with {lit}`[Module ℂ V]`, a complex vector space. -/
 
 {lit}`F∞` is the set of all sequences of elements of {lit}`F`; in Lean, {lit}`ℕ → F`. -/
 
+cite ladr4e "1.23" in
 example : AddCommGroup (ℕ → F) := inferInstance
+cite ladr4e "1.23" in
 example : Module F (ℕ → F) := inferInstance
 
+cite ladr4e "1.23" in
 example (f g : ℕ → ℝ) (i : ℕ) : (f + g) i = f i + g i := rfl
+cite ladr4e "1.23" in
 example (c : ℝ) (f : ℕ → ℝ) (i : ℕ) : (c • f) i = c * f i := rfl
 
 /-! The simplest vector space is the one-element space {lit}`{0}`. In Lean this is
 {lit}`PUnit`; mathlib provides the instances automatically. -/
 
+cite ladr4e "1.23" in
 example (F : Type*) [Field F] : Module F PUnit := inferInstance
+cite ladr4e "1.23" in
 example (v w : PUnit) : v = w := rfl
 
 /-! 1.24 Notation: F^S
@@ -98,7 +114,9 @@ example (v w : PUnit) : v = w := rfl
 For a set {lit}`S`, {lit}`F^S` denotes the set of functions from {lit}`S` to {lit}`F`. In Lean we
 just write {lit}`S → F`. Addition and scalar multiplication are pointwise. -/
 
+cite ladr4e "1.24" in
 example (S : Type*) (f g : S → F) (x : S) : (f + g) x = f x + g x := rfl
+cite ladr4e "1.24" in
 example (S : Type*) (c : F) (f : S → F) (x : S) : (c • f) x = c * f x := rfl
 
 /-! 1.25 Example: F^S is a vector space
@@ -107,22 +125,32 @@ The additive identity of {lit}`F^S` is the function {lit}`0 : S → F` defined b
 {lit}`0 x = 0` for all {lit}`x ∈ S`. For {lit}`f : S → F`, the additive inverse {lit}`-f`
 is defined by {lit}`(-f) x = -(f x)` for all {lit}`x ∈ S`. -/
 
+cite ladr4e "1.25" in
 example (S : Type*) : AddCommGroup (S → F) := inferInstance
+cite ladr4e "1.25" in
 example (S : Type*) : Module F (S → F) := inferInstance
 
+cite ladr4e "1.25" in
 example (S : Type*) (x : S) : (0 : S → F) x = 0 := rfl
+cite ladr4e "1.25" in
 example (S : Type*) (f : S → F) (x : S) : (-f) x = -(f x) := rfl
 
 /-! 1.26 Unique additive identity -/
 
+@[cite ladr4e "1.26"]
+-- cite ladr4e "1.26" step 1 closeMatch
 theorem unique_zero (z : V) (h : ∀ v, v + z = v) : z = 0 :=
+  -- cite ladr4e "1.26" step 2 exactMatch
   calc z = z + 0     := (add_zero z).symm
     _    = 0 + z     := add_comm z 0
     _    = 0         := h 0
 
 /-! 1.27 Unique additive inverse -/
 
+@[cite ladr4e "1.27"]
+-- cite ladr4e "1.27" step 1 closeMatch
 theorem unique_neg (v w : V) (h : v + w = 0) : w = -v :=
+  -- cite ladr4e "1.27" step 2 exactMatch
   calc w = w + 0                 := (add_zero w).symm
     _    = w + (v + (-v))        := by rw [add_neg_cancel]
     _    = (w + v) + (-v)        := (add_assoc w v (-v)).symm
@@ -132,7 +160,9 @@ theorem unique_neg (v w : V) (h : v + w = 0) : w = -v :=
 
 /-! 1.28 Notation: −v, w − v -/
 
+cite ladr4e "1.28" in
 example (v : V) : v + (-v) = 0 := add_neg_cancel v
+cite ladr4e "1.28" in
 example (v w : V) : w - v = w + (-v) := sub_eq_add_neg w v
 
 /-! 1.29 Notation: V
@@ -142,12 +172,14 @@ once at the top via {lit}`variable {V : Type*} [AddCommGroup V] [Module F V]`). 
 
 /-! 1.30 The number 0 times a vector -/
 
-@[avoiding zero_smul]
+@[cite ladr4e "1.30", avoiding zero_smul]
 theorem zero_smul' (v : V) : (0 : F) • v = 0 := by
+  -- cite ladr4e "1.30" step 1 exactMatch
   have h : (0 : F) • v = (0 : F) • v + (0 : F) • v :=
     calc (0 : F) • v = (0 + 0 : F) • v          := by rw [add_zero]
       _              = (0 : F) • v + (0 : F) • v := add_smul 0 0 v
   -- Add {lit}`-(0 • v)` to both sides of {lit}`h`, then simplify.
+  -- cite ladr4e "1.30" step 2 exactMatch
   have h2 : (0 : F) • v + -((0 : F) • v) = ((0 : F) • v + (0 : F) • v) + -((0 : F) • v) :=
     congrArg (· + -((0 : F) • v)) h
   rw [add_neg_cancel, add_assoc, add_neg_cancel, add_zero] at h2
@@ -155,12 +187,14 @@ theorem zero_smul' (v : V) : (0 : F) • v = 0 := by
 
 /-! 1.31 A number times the vector 0 -/
 
-@[avoiding smul_zero]
+@[cite ladr4e "1.31", avoiding smul_zero]
 theorem smul_zero' (a : F) : a • (0 : V) = 0 := by
+  -- cite ladr4e "1.31" step 1 exactMatch
   have h : a • (0 : V) = a • 0 + a • 0 :=
     calc a • (0 : V) = a • (0 + 0)         := by rw [add_zero]
       _              = a • 0 + a • 0       := smul_add a 0 0
   -- Add {lit}`-(a • 0)` to both sides of {lit}`h`, then simplify.
+  -- cite ladr4e "1.31" step 2 exactMatch
   have h2 : a • (0 : V) + -(a • (0 : V)) = (a • 0 + a • 0) + -(a • 0) :=
     congrArg (· + -(a • (0 : V))) h
   rw [add_neg_cancel, add_assoc, add_neg_cancel, add_zero] at h2
@@ -168,9 +202,11 @@ theorem smul_zero' (a : F) : a • (0 : V) = 0 := by
 
 /-! 1.32 The number −1 times a vector -/
 
-@[avoiding neg_one_smul]
+@[cite ladr4e "1.32", avoiding neg_one_smul]
 theorem neg_one_smul' (v : V) : (-1 : F) • v = -v :=
+  -- cite ladr4e "1.32" step 2 exactMatch
   unique_neg v ((-1 : F) • v) <|
+    -- cite ladr4e "1.32" step 1 exactMatch
     calc v + (-1 : F) • v
         = (1 : F) • v + (-1 : F) • v   := by rw [one_smul]
       _ = ((1 : F) + (-1 : F)) • v      := (add_smul 1 (-1) v).symm
@@ -180,12 +216,12 @@ theorem neg_one_smul' (v : V) : (-1 : F) • v = -v :=
 /-! # Exercises -/
 
 /-- 1B.1 -/
-@[avoiding neg_neg]
+@[cite ladr4e "Exercise 1B.1", avoiding neg_neg]
 theorem exercise_1B_1 (v : V) : -(-v) = v := by
   sorry
 
 /-- 1B.2 -/
-@[avoiding smul_eq_zero, smul_eq_zero_iff_eq, smul_eq_zero_iff_eq']
+@[cite ladr4e "Exercise 1B.2", avoiding smul_eq_zero, smul_eq_zero_iff_eq, smul_eq_zero_iff_eq']
 theorem exercise_1B_2 (a : F) (v : V) (h : a • v = 0) :
     a = 0 ∨ v = 0 := by
   sorry
@@ -194,17 +230,20 @@ theorem exercise_1B_2 (a : F) (v : V) (h : a • v = 0) :
 {lit}`(3 : F)` to be invertible. We assume {lit}`[CharZero F]`, which forces
 {lit}`(n : F) ≠ 0` for every positive {lit}`n` and is satisfied by {lit}`ℝ` and
 {lit}`ℂ` (Axler's working fields). -/
+@[cite ladr4e "Exercise 1B.3"]
 theorem exercise_1B_3 [CharZero F] (v w : V) : ∃! x : V, v + (3 : F) • x = w := by
   sorry
 
 /-- 1B.4: We show the failure in the {lit}`AddCommGroup` subcomponent —
 the failing axiom lives in the additive structure. -/
+@[cite ladr4e "Exercise 1B.4"]
 theorem exercise_1B_4 : IsEmpty (AddCommGroup Empty) := by
   sorry
 
 /-- The textbook's *alternative* module-side axioms (1B.5): the four standard
 smul axioms with {lit}`add_neg_cancel` replaced by {lit}`0 • v = 0`. The
 additive part lives in the surrounding {lit}`AddCommMonoid V`. -/
+@[cite ladr4e "Exercise 1B.5" (rel := relatedMatch)]
 structure AxlerAltModule (F V : Type*) [Field F] [AddCommMonoid V] where
   smul : F → V → V
   one_smul : ∀ v : V, smul 1 v = v
@@ -213,12 +252,14 @@ structure AxlerAltModule (F V : Type*) [Field F] [AddCommMonoid V] where
   add_smul : ∀ (a b : F) (v : V), smul (a + b) v = smul a v + smul b v
   zero_smul : ∀ v : V, smul 0 v = 0
 
+cite ladr4e "Exercise 1B.5" in
 /-- 1B.5, ⇐ direction (original ⇒ alt): from {lit}`add_neg_cancel` and the four
 standard smul axioms, derive {lit}`0 • v = 0`. This is theorem 1.30 above. -/
 example (v : V) : (0 : F) • v = 0 := zero_smul' v
 
 /-- 1B.5, ⇒ direction (alt ⇒ original): given the alt axioms over an
 {lit}`AddCommMonoid`, the dropped axiom — additive inverses — must hold. -/
+@[cite ladr4e "Exercise 1B.5"]
 theorem exercise_1B_5 (V : Type*) [AddCommMonoid V] (m : AxlerAltModule F V) :
     ∀ v : V, ∃ w : V, v + w = 0 := by
   sorry
@@ -233,6 +274,7 @@ theorem exercise_1B_5 (V : Type*) [AddCommMonoid V] (m : AxlerAltModule F V) :
 
   So we define a new addition {lit}`addAxler` that agrees with Axler's convention.
 -/
+@[cite ladr4e "Exercise 1B.6"]
 noncomputable def addAxler (x y : EReal) : EReal :=
   if (x = ⊤ ∧ y = ⊥) ∨ (x = ⊥ ∧ y = ⊤) then 0 else x + y
 
@@ -243,13 +285,14 @@ structure on {lit}`EReal` whose addition is {lit}`addAxler`.
 
 Note: mathlib cannot not provide an {lit}`AddGroup EReal` instance either —
 {lit}`EReal` even with its addition definition. -/
+@[cite ladr4e "Exercise 1B.6"]
 theorem exercise_1B_6 : ¬ ∃ g : AddCommGroup EReal, g.add = addAxler := by
   sorry
 
 /-- 1B.7: {lit}`V^S = (S → V)` is a vector space with pointwise operations. We
 pick the {lit}`Module F` subcomponent — the {lit}`AddCommGroup` part comes for free
 from Pi instances; the reader fills in the scalar-action axioms. -/
-@[implicit_reducible,
+@[cite ladr4e "Exercise 1B.7", implicit_reducible,
   avoiding
     Pi.smulZeroClass, Pi.addZeroClass, Pi.distribSMul,
     Pi.Function.module, Pi.instZero, Pi.mulAction
@@ -267,13 +310,14 @@ def exercise_1B_7 (S : Type*) [Nonempty S] : Module F (S → V) where
 element {lit}`(u, v)` is written {lit}`u + i·v` in the textbook. The underlying
 additive structure is just the product (mathlib provides it via Pi); the
 content of 1B.8 is the *complex* scalar multiplication. -/
+@[cite ladr4e "Exercise 1B.6", cite ladr4e "Exercise 1B.8" (rel := hasPart)]
 abbrev Complexification (W : Type*) := W × W
 
 /-- 1B.8: with the textbook's complex scalar multiplication, the complexification
 of a real vector space is a complex vector space. We pick the {lit}`Module ℂ`
 subcomponent — the {lit}`AddCommGroup` part comes for free from the product
 {lit}`W × W`; the new content is the complex scalar action. -/
-@[implicit_reducible]
+@[cite ladr4e "Exercise 1B.8", implicit_reducible]
 def exercise_1B_8 (W : Type*) [AddCommGroup W] [Module ℝ W] :
     Module ℂ (Complexification W) where
   smul c x := (c.re • x.1 - c.im • x.2, c.re • x.2 + c.im • x.1)
@@ -295,38 +339,52 @@ mathlib's {name}`EReal` multiplication via the coercion:
 
 /-! Axler's scalar action on {lit}`⊤ = ∞`. -/
 
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_smul_top_pos {t : ℝ} (h : 0 < t) : (t : EReal) * ⊤ = ⊤ :=
   EReal.mul_top_of_pos (EReal.coe_pos.mpr h)
 
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_smul_top_zero : ((0 : ℝ) : EReal) * ⊤ = 0 := by simp
 
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_smul_top_neg {t : ℝ} (h : t < 0) : (t : EReal) * ⊤ = ⊥ :=
   EReal.mul_top_of_neg (EReal.coe_neg'.mpr h)
 
 /-! Axler's scalar action on {lit}`⊥ = -∞`. -/
 
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_smul_bot_pos {t : ℝ} (h : 0 < t) : (t : EReal) * ⊥ = ⊥ :=
   EReal.mul_bot_of_pos (EReal.coe_pos.mpr h)
 
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_smul_bot_zero : ((0 : ℝ) : EReal) * ⊥ = 0 := by simp
 
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_smul_bot_neg {t : ℝ} (h : t < 0) : (t : EReal) * ⊥ = ⊤ :=
   EReal.mul_bot_of_neg (EReal.coe_neg'.mpr h)
 
 /-! Axler's additive cases that *do* match mathlib's {lit}`+`. -/
 
+@[cite ladr4e "Exercise 1B.6" (rel := relatedMatch)]
 theorem axler_add_top (t : ℝ) : (t : EReal) + ⊤ = ⊤ := EReal.coe_add_top t
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_top_add (t : ℝ) : ⊤ + (t : EReal) = ⊤ := by rw [add_comm]; exact EReal.coe_add_top t
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_top_add_top : (⊤ : EReal) + ⊤ = ⊤ := by simp
 
+@[cite ladr4e "Exercise 1B.6" (rel := relatedMatch)]
 theorem axler_add_bot (t : ℝ) : (t : EReal) + ⊥ = ⊥ := by simp
+@[cite ladr4e "Exercise 1B.6" (rel := relatedMatch)]
 theorem axler_bot_add (t : ℝ) : ⊥ + (t : EReal) = ⊥ := EReal.bot_add t
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_bot_add_bot : (⊥ : EReal) + ⊥ = ⊥ := by simp
 
 /-! Axler's two non-mathlib additive cases — these are exactly what
 {lit}`addAxler` overrides, so we state them about {lit}`addAxler`, not {lit}`+`. -/
 
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_top_add_bot : addAxler ⊤ ⊥ = 0 := by unfold addAxler; simp
+@[cite ladr4e "Exercise 1B.6" (rel := hasPart)]
 theorem axler_bot_add_top : addAxler ⊥ ⊤ = 0 := by unfold addAxler; simp
 
 end LADR.Section_1B

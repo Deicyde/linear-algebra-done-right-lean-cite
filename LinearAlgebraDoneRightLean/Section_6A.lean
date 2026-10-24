@@ -19,6 +19,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.Recall
 import CompanionHelper
+import LinearAlgebraDoneRightLean.Sources
 
 /-!
 # Axler, *Linear Algebra Done Right* (4e) — Section 6A: Inner Products and Norms
@@ -870,6 +871,7 @@ noncomputable def complexificationInner {V : Type*} [NormedAddCommGroup V]
 
 /-- The complex scalar action on {lit}`V_ℂ = V × V`: {lit}`c • (u, v)` represents
 {lit}`c (u + iv) = (c.re · u − c.im · v) + i (c.im · u + c.re · v)`. -/
+@[cite ladr4e "Exercise 1B.8" (rel := hasPart)]
 def complexificationSmul {V : Type*} [AddCommGroup V] [Module ℝ V]
     (c : ℂ) (p : V × V) : V × V :=
   (c.re • p.1 - c.im • p.2, c.im • p.1 + c.re • p.2)

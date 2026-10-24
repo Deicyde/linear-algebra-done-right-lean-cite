@@ -28,3 +28,7 @@ rev = "v4.30.0-rc2"
 
 [[lean_lib]]
 name = "LinearAlgebraDoneRightLean"
+
+[[require]]
+name = "cite"
+path = "../lean-cite"
