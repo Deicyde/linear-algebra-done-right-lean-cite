@@ -46,16 +46,16 @@ A subset is a subspace iff it contains {lit}`0`, is closed under addition, and i
 closed under scalar multiplication. These are exactly the three fields of
 {name}`Submodule`. -/
 
+cite ladr4e "1.34" (step := 1) (rel := closeMatch) in
 cite ladr4e "1.34" in
--- cite ladr4e "1.34" step 1 closeMatch
 recall Submodule.zero_mem {R : Type*} {M : Type*} [Semiring R] [AddCommMonoid M]
     [Module R M] (p : Submodule R M) : (0 : M) ∈ p
+cite ladr4e "1.34" (step := 1) (rel := closeMatch) in
 cite ladr4e "1.34" in
--- cite ladr4e "1.34" step 1 closeMatch
 recall Submodule.add_mem {R : Type*} {M : Type*} [Semiring R] [AddCommMonoid M]
     [Module R M] (p : Submodule R M) {x y : M} (h₁ : x ∈ p) (h₂ : y ∈ p) : x + y ∈ p
+cite ladr4e "1.34" (step := 1) (rel := closeMatch) in
 cite ladr4e "1.34" in
--- cite ladr4e "1.34" step 1 closeMatch
 recall Submodule.smul_mem {R : Type*} {M : Type*} [Semiring R] [AddCommMonoid M]
     [Module R M] (p : Submodule R M) {x : M} (r : R) (h : x ∈ p) : r • x ∈ p
 
@@ -73,22 +73,22 @@ from the three closure assumptions and the corresponding axiom in {lit}`V`. -/
 {lit}`S`. The additive inverse uses {lit}`-u = (-1) • u`, which is why we don't
 need a fourth closure assumption. -/
 
+cite ladr4e "1.34" (step := 2) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 2 exactMatch
 def subZero (S : Set V) (h0 : (0 : V) ∈ S) : S := ⟨0, h0⟩
 
+cite ladr4e "1.34" (step := 3) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 3 exactMatch
 def subAdd (S : Set V) (hadd : ∀ (u w : V), u ∈ S → w ∈ S → u + w ∈ S)
     (u w : S) : S := ⟨u.1 + w.1, hadd u.1 w.1 u.2 w.2⟩
 
+cite ladr4e "1.34" (step := 5) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 5 exactMatch
 def subNeg (S : Set V) (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S) (u : S) :
     S := ⟨-u.1, by simpa using hsmul (-1) u.1 u.2⟩
 
+cite ladr4e "1.34" (step := 4) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 4 exactMatch
 def subSMul (S : Set V) (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S)
     (a : F) (u : S) : S := ⟨a • u.1, hsmul a u.1 u.2⟩
 
@@ -96,58 +96,58 @@ def subSMul (S : Set V) (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S)
 inherited operation with {name}`Subtype.ext`, then invoke the corresponding
 axiom of {lit}`V`. -/
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_add_assoc (S : Set V)
     (hadd : ∀ (u w : V), u ∈ S → w ∈ S → u + w ∈ S) (u w x : S) :
     subAdd S hadd (subAdd S hadd u w) x = subAdd S hadd u (subAdd S hadd w x) :=
   Subtype.ext (add_assoc u.1 w.1 x.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_add_comm (S : Set V)
     (hadd : ∀ (u w : V), u ∈ S → w ∈ S → u + w ∈ S) (u w : S) :
     subAdd S hadd u w = subAdd S hadd w u :=
   Subtype.ext (add_comm u.1 w.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_zero_add (S : Set V) (h0 : (0 : V) ∈ S)
     (hadd : ∀ (u w : V), u ∈ S → w ∈ S → u + w ∈ S) (u : S) :
     subAdd S hadd (subZero S h0) u = u :=
   Subtype.ext (zero_add u.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_add_zero (S : Set V) (h0 : (0 : V) ∈ S)
     (hadd : ∀ (u w : V), u ∈ S → w ∈ S → u + w ∈ S) (u : S) :
     subAdd S hadd u (subZero S h0) = u :=
   Subtype.ext (add_zero u.1)
 
+cite ladr4e "1.34" (step := 5) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 5 exactMatch
 theorem sub_neg_add_cancel (S : Set V) (h0 : (0 : V) ∈ S)
     (hadd : ∀ (u w : V), u ∈ S → w ∈ S → u + w ∈ S)
     (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S) (u : S) :
     subAdd S hadd (subNeg S hsmul u) u = subZero S h0 :=
   Subtype.ext (neg_add_cancel u.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_one_smul (S : Set V)
     (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S) (u : S) :
     subSMul S hsmul 1 u = u :=
   Subtype.ext (one_smul F u.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_mul_smul (S : Set V)
     (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S) (a b : F) (u : S) :
     subSMul S hsmul (a * b) u = subSMul S hsmul a (subSMul S hsmul b u) :=
   Subtype.ext (mul_smul a b u.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_smul_add (S : Set V)
     (hadd : ∀ (u w : V), u ∈ S → w ∈ S → u + w ∈ S)
     (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S) (a : F) (u w : S) :
@@ -155,8 +155,8 @@ theorem sub_smul_add (S : Set V)
       = subAdd S hadd (subSMul S hsmul a u) (subSMul S hsmul a w) :=
   Subtype.ext (smul_add a u.1 w.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_add_smul (S : Set V)
     (hadd : ∀ (u w : V), u ∈ S → w ∈ S → u + w ∈ S)
     (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S) (a b : F) (u : S) :
@@ -164,15 +164,15 @@ theorem sub_add_smul (S : Set V)
       = subAdd S hadd (subSMul S hsmul a u) (subSMul S hsmul b u) :=
   Subtype.ext (add_smul a b u.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_zero_smul (S : Set V) (h0 : (0 : V) ∈ S)
     (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S) (u : S) :
     subSMul S hsmul 0 u = subZero S h0 :=
   Subtype.ext (zero_smul F u.1)
 
+cite ladr4e "1.34" (step := 6) (rel := exactMatch) in
 @[cite ladr4e "1.34"]
--- cite ladr4e "1.34" step 6 exactMatch
 theorem sub_smul_zero (S : Set V) (h0 : (0 : V) ∈ S)
     (hsmul : ∀ (a : F) (u : V), u ∈ S → a • u ∈ S) (a : F) :
     subSMul S hsmul a (subZero S h0) = subZero S h0 :=
@@ -440,19 +440,19 @@ Axler's argument has three steps:
 (ii) Each summand is contained in the sum: take {lit}`u = u + 0` and
     {lit}`w = 0 + w` (Axler's "consider sums where all except one are 0").
  -/
+cite ladr4e "1.40" (step := 2) (rel := closeMatch) in
 cite ladr4e "1.40" in
--- cite ladr4e "1.40" step 2 closeMatch
 example (U W : Submodule F V) : U ≤ U ⊔ W :=
   fun u hu => Submodule.mem_sup.mpr ⟨u, hu, 0, W.zero_mem, add_zero u⟩
+cite ladr4e "1.40" (step := 2) (rel := closeMatch) in
 cite ladr4e "1.40" in
--- cite ladr4e "1.40" step 2 closeMatch
 example (U W : Submodule F V) : W ≤ U ⊔ W :=
   fun w hw => Submodule.mem_sup.mpr ⟨0, U.zero_mem, w, hw, zero_add w⟩
 
 /-! (iii) Any subspace containing both summands contains the sum, because subspaces
     are closed under addition. -/
+cite ladr4e "1.40" (step := 3) (rel := closeMatch) in
 cite ladr4e "1.40" in
--- cite ladr4e "1.40" step 3 closeMatch
 example (U W X : Submodule F V) (h₁ : U ≤ X) (h₂ : W ≤ X) : U ⊔ W ≤ X := by
   intro x hx
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
@@ -678,56 +678,56 @@ end Example_1_44
 @[cite ladr4e "1.45"]
 theorem isDirectSum_iff {m : ℕ} (W : Fin m → Submodule F V) :
     IsDirectSum W ↔ ∀ (u : (i : Fin m) → W i), (∑ i, ((u i : V))) = 0 ↔ u = 0 := by
-  -- cite ladr4e "1.45" step 1 exactMatch
-  refine ⟨fun h u => ⟨fun hu => h u 0 (by simpa using hu), fun hu => by simp [hu]⟩, ?_⟩
-  -- cite ladr4e "1.45" step 2 exactMatch
-  intro h u v huv
+  cite ladr4e "1.45" step 1 exactMatch =>
+    refine ⟨fun h u => ⟨fun hu => h u 0 (by simpa using hu), fun hu => by simp [hu]⟩, ?_⟩
+  cite ladr4e "1.45" step 2 exactMatch =>
+    intro h u v huv
   -- cite ladr4e "1.45" step 4 exactMatch
   have hzero : u - v = 0 := by
     apply (h _).mp
-    -- cite ladr4e "1.45" step 3 exactMatch
-    simp only [Pi.sub_apply, AddSubgroupClass.coe_sub, Finset.sum_sub_distrib]
-    rw [huv, sub_self]
-  -- cite ladr4e "1.45" step 5 exactMatch
-  exact sub_eq_zero.mp hzero
+  -- cite end
+    cite ladr4e "1.45" step 3 exactMatch =>
+      simp only [Pi.sub_apply, AddSubgroupClass.coe_sub, Finset.sum_sub_distrib]
+      rw [huv, sub_self]
+  cite ladr4e "1.45" step 5 exactMatch =>
+    exact sub_eq_zero.mp hzero
 
 /-! 1.46 Direct sum of two subspaces -/
 
 @[cite ladr4e "1.46"]
 theorem isDirectSum_pair_iff (U W : Submodule F V) :
     IsDirectSum ![U, W] ↔ U ⊓ W = ⊥ := by
-  -- cite ladr4e "1.46" step 2 4 exactMatch
-  rw [isDirectSum_iff, Submodule.eq_bot_iff]
-  -- cite end
+  cite ladr4e "1.46" step 2 4 exactMatch =>
+    rw [isDirectSum_iff, Submodule.eq_bot_iff]
   refine ⟨?_, ?_⟩
   · -- direct sum → intersection trivial
-    -- cite ladr4e "1.46" step 1 exactMatch
-    intro h v ⟨hvU, hvW⟩
-    have m₀ : v ∈ ![U, W] (0 : Fin 2) := hvU
-    have m₁ : (-v) ∈ ![U, W] (1 : Fin 2) := W.neg_mem hvW
-    let u : (i : Fin 2) → ![U, W] i := fun i => match i with
-      | ⟨0, _⟩ => ⟨v, m₀⟩
-      | ⟨1, _⟩ => ⟨-v, m₁⟩
-    have hsum : (∑ i, ((u i : V))) = 0 := by simp [u, Fin.sum_univ_two]
-    -- cite ladr4e "1.46" step 2 exactMatch
-    have hu : u = 0 := (h u).mp hsum
-    have : (u 0 : V) = (0 : V) := by rw [hu]; rfl
-    simpa [u] using this
+    cite ladr4e "1.46" step 1 exactMatch =>
+      intro h v ⟨hvU, hvW⟩
+      have m₀ : v ∈ ![U, W] (0 : Fin 2) := hvU
+      have m₁ : (-v) ∈ ![U, W] (1 : Fin 2) := W.neg_mem hvW
+      let u : (i : Fin 2) → ![U, W] i := fun i => match i with
+        | ⟨0, _⟩ => ⟨v, m₀⟩
+        | ⟨1, _⟩ => ⟨-v, m₁⟩
+      have hsum : (∑ i, ((u i : V))) = 0 := by simp [u, Fin.sum_univ_two]
+    cite ladr4e "1.46" step 2 exactMatch =>
+      have hu : u = 0 := (h u).mp hsum
+      have : (u 0 : V) = (0 : V) := by rw [hu]; rfl
+      simpa [u] using this
   · -- intersection trivial → direct sum
-    -- cite ladr4e "1.46" step 3 exactMatch
-    intro hint u
-    refine ⟨fun hsum => ?_, fun hu => by simp [hu]⟩
-    rw [Fin.sum_univ_two] at hsum
-    -- cite ladr4e "1.46" step 5 exactMatch
-    have h0 : (u 0 : V) = -(u 1 : V) := eq_neg_of_add_eq_zero_left hsum
-    have h0W : (u 0 : V) ∈ W := by rw [h0]; exact W.neg_mem (u 1).2
-    have h0Z : (u 0 : V) = 0 := hint _ ⟨(u 0).2, h0W⟩
-    -- cite ladr4e "1.46" step 6 exactMatch
-    have h1Z : (u 1 : V) = 0 := by rw [← neg_eq_zero, ← h0, h0Z]
-    funext i
-    fin_cases i <;> apply Subtype.ext
-    · exact h0Z
-    · exact h1Z
+    cite ladr4e "1.46" step 3 exactMatch =>
+      intro hint u
+      refine ⟨fun hsum => ?_, fun hu => by simp [hu]⟩
+      rw [Fin.sum_univ_two] at hsum
+    cite ladr4e "1.46" step 5 exactMatch =>
+      have h0 : (u 0 : V) = -(u 1 : V) := eq_neg_of_add_eq_zero_left hsum
+      have h0W : (u 0 : V) ∈ W := by rw [h0]; exact W.neg_mem (u 1).2
+      have h0Z : (u 0 : V) = 0 := hint _ ⟨(u 0).2, h0W⟩
+    cite ladr4e "1.46" step 6 exactMatch =>
+      have h1Z : (u 1 : V) = 0 := by rw [← neg_eq_zero, ← h0, h0Z]
+      funext i
+      fin_cases i <;> apply Subtype.ext
+      · exact h0Z
+      · exact h1Z
 
 /-! {lit}`IsCompl`
 

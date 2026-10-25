@@ -137,20 +137,20 @@ example (S : Type*) (f : S → F) (x : S) : (-f) x = -(f x) := rfl
 
 /-! 1.26 Unique additive identity -/
 
+cite ladr4e "1.26" (statement := 1) (rel := closeMatch) in
 @[cite ladr4e "1.26"]
--- cite ladr4e "1.26" step 1 closeMatch
 theorem unique_zero (z : V) (h : ∀ v, v + z = v) : z = 0 :=
-  -- cite ladr4e "1.26" step 2 exactMatch
+  cite ladr4e "1.26" step 2 exactMatch in
   calc z = z + 0     := (add_zero z).symm
     _    = 0 + z     := add_comm z 0
     _    = 0         := h 0
 
 /-! 1.27 Unique additive inverse -/
 
+cite ladr4e "1.27" (statement := 1) (rel := closeMatch) in
 @[cite ladr4e "1.27"]
--- cite ladr4e "1.27" step 1 closeMatch
 theorem unique_neg (v w : V) (h : v + w = 0) : w = -v :=
-  -- cite ladr4e "1.27" step 2 exactMatch
+  cite ladr4e "1.27" step 2 exactMatch in
   calc w = w + 0                 := (add_zero w).symm
     _    = w + (v + (-v))        := by rw [add_neg_cancel]
     _    = (w + v) + (-v)        := (add_assoc w v (-v)).symm
@@ -174,31 +174,31 @@ once at the top via {lit}`variable {V : Type*} [AddCommGroup V] [Module F V]`). 
 
 @[cite ladr4e "1.30", avoiding zero_smul]
 theorem zero_smul' (v : V) : (0 : F) • v = 0 := by
-  -- cite ladr4e "1.30" step 1 exactMatch
-  have h : (0 : F) • v = (0 : F) • v + (0 : F) • v :=
-    calc (0 : F) • v = (0 + 0 : F) • v          := by rw [add_zero]
-      _              = (0 : F) • v + (0 : F) • v := add_smul 0 0 v
+  cite ladr4e "1.30" step 1 exactMatch =>
+    have h : (0 : F) • v = (0 : F) • v + (0 : F) • v :=
+      calc (0 : F) • v = (0 + 0 : F) • v          := by rw [add_zero]
+        _              = (0 : F) • v + (0 : F) • v := add_smul 0 0 v
   -- Add {lit}`-(0 • v)` to both sides of {lit}`h`, then simplify.
-  -- cite ladr4e "1.30" step 2 exactMatch
-  have h2 : (0 : F) • v + -((0 : F) • v) = ((0 : F) • v + (0 : F) • v) + -((0 : F) • v) :=
-    congrArg (· + -((0 : F) • v)) h
-  rw [add_neg_cancel, add_assoc, add_neg_cancel, add_zero] at h2
-  exact h2.symm
+  cite ladr4e "1.30" step 2 exactMatch =>
+    have h2 : (0 : F) • v + -((0 : F) • v) = ((0 : F) • v + (0 : F) • v) + -((0 : F) • v) :=
+      congrArg (· + -((0 : F) • v)) h
+    rw [add_neg_cancel, add_assoc, add_neg_cancel, add_zero] at h2
+    exact h2.symm
 
 /-! 1.31 A number times the vector 0 -/
 
 @[cite ladr4e "1.31", avoiding smul_zero]
 theorem smul_zero' (a : F) : a • (0 : V) = 0 := by
-  -- cite ladr4e "1.31" step 1 exactMatch
-  have h : a • (0 : V) = a • 0 + a • 0 :=
-    calc a • (0 : V) = a • (0 + 0)         := by rw [add_zero]
-      _              = a • 0 + a • 0       := smul_add a 0 0
+  cite ladr4e "1.31" step 1 exactMatch =>
+    have h : a • (0 : V) = a • 0 + a • 0 :=
+      calc a • (0 : V) = a • (0 + 0)         := by rw [add_zero]
+        _              = a • 0 + a • 0       := smul_add a 0 0
   -- Add {lit}`-(a • 0)` to both sides of {lit}`h`, then simplify.
-  -- cite ladr4e "1.31" step 2 exactMatch
-  have h2 : a • (0 : V) + -(a • (0 : V)) = (a • 0 + a • 0) + -(a • 0) :=
-    congrArg (· + -(a • (0 : V))) h
-  rw [add_neg_cancel, add_assoc, add_neg_cancel, add_zero] at h2
-  exact h2.symm
+  cite ladr4e "1.31" step 2 exactMatch =>
+    have h2 : a • (0 : V) + -(a • (0 : V)) = (a • 0 + a • 0) + -(a • 0) :=
+      congrArg (· + -(a • (0 : V))) h
+    rw [add_neg_cancel, add_assoc, add_neg_cancel, add_zero] at h2
+    exact h2.symm
 
 /-! 1.32 The number −1 times a vector -/
 
@@ -206,7 +206,8 @@ theorem smul_zero' (a : F) : a • (0 : V) = 0 := by
 theorem neg_one_smul' (v : V) : (-1 : F) • v = -v :=
   -- cite ladr4e "1.32" step 2 exactMatch
   unique_neg v ((-1 : F) • v) <|
-    -- cite ladr4e "1.32" step 1 exactMatch
+  -- cite end
+    cite ladr4e "1.32" step 1 exactMatch in
     calc v + (-1 : F) • v
         = (1 : F) • v + (-1 : F) • v   := by rw [one_smul]
       _ = ((1 : F) + (-1 : F)) • v      := (add_smul 1 (-1) v).symm

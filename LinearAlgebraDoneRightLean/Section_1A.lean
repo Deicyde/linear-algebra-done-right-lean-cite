@@ -156,12 +156,12 @@ example (x y : Fin n → F) : x + y = fun i => x i + y i := rfl
 
 /-! 1.14 Commutativity of addition in Fⁿ -/
 
+cite ladr4e "1.14" (statement := 1) (rel := exactMatch) in
 @[cite ladr4e "1.14"]
--- cite ladr4e "1.14" step 1 exactMatch
 theorem add_comm_pi (x y : Fin n → F) : x + y = y + x := by
-  -- cite ladr4e "1.14" step 2 exactMatch
-  funext i
-  exact add_comm (x i) (y i)
+  cite ladr4e "1.14" step 2 exactMatch =>
+    funext i
+    exact add_comm (x i) (y i)
 
 /-! 1.15 Notation: 0 -/
 
