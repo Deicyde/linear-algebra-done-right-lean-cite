@@ -31,4 +31,5 @@ name = "LinearAlgebraDoneRightLean"
 
 [[require]]
 name = "cite"
-path = "../lean-cite"
+git = "https://github.com/Deicyde/lean-cite"
+rev = "2de6db2fe758e9ffd7ae0578a52a70d4fbf82ddf"
