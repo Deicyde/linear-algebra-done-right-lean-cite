@@ -1,3 +1,35 @@
+# lean-cite demo: *Linear Algebra Done Right*
+
+This repository shows [lean-cite](https://github.com/Deicyde/lean-cite) on a real formalization:
+Rado Kirov's [Lean companion to *Linear Algebra Done Right*](https://github.com/rkirov/linear-algebra-done-right-lean),
+with chapter 1's links to the book written into the Lean.
+
+- `main` is Rado's repository at `94a528c`, unchanged apart from this note.
+- [`wrappers`](https://github.com/Deicyde/linear-algebra-done-right-lean-cite/tree/wrappers) tags
+  chapter 1 with `@[cite]` and marks proof steps with wrappers (`cite ladr4e "1.26" step 2 =>`).
+- [`comment-markers`](https://github.com/Deicyde/linear-algebra-done-right-lean-cite/tree/comment-markers)
+  has the same tags, with proof steps marked by comments (`-- cite ladr4e "1.26" step 2`).
+
+To export the links as [Literature Links](https://github.com/mathlib-initiative/literature-links)
+annotations, on either branch:
+
+```sh
+git checkout wrappers
+lake exe cache get
+lake build
+lake env lean CiteExport.lean
+python3 .lake/packages/cite/scripts/cite_ll.py cite-export.json \
+  --project https://github.com/Deicyde/linear-algebra-done-right-lean-cite \
+  --commit "$(git rev-parse HEAD)" --out annotations/
+```
+
+lean-cite's [`examples/ladr`](https://github.com/Deicyde/lean-cite/tree/main/examples/ladr) checks
+these tags against the existing companion's annotations.
+
+Rado's README follows.
+
+---
+
 # Lean Companion to Axler's *Linear Algebra Done Right* (4e)
 
 A Lean 4 companion to Sheldon Axler's [*Linear Algebra Done Right*](https://linear.axler.net/) (4th edition; freely available as a [PDF](https://linear.axler.net/LADR4e.pdf)).
